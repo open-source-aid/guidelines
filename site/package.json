@@ -1,0 +1,11 @@
+{
+  "name": "os-aid-guideline-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs .. template.html ../_site/index.html"
+  },
+  "dependencies": {
+    "marked": "12.0.2"
+  }
+}
