@@ -23,6 +23,7 @@ These drivers deliver insulin, so a safety rule is never a style preference. If 
 | Simulator or firmware work | [11-simulators.md](11-simulators.md) |
 | Releases, API changes | [12-versioning-and-releases.md](12-versioning-and-releases.md) |
 | AAPS, Trio or Loop wrappers, bindings | [13-app-integration.md](13-app-integration.md), [16-case-study-dana.md](16-case-study-dana.md) |
+| Variant or a second driver? one vendor, several products | [17-terminology.md](17-terminology.md), then [18-case-study-sibionics.md](18-case-study-sibionics.md) |
 
 ## Non-negotiable rules
 

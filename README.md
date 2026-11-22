@@ -34,6 +34,7 @@ The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** follow 
 | 14 | [14-open-questions.md](14-open-questions.md) | Decisions the group still has to make |
 | 15 | [15-new-driver-checklist.md](15-new-driver-checklist.md) | Checklist for a new driver or a review |
 | 16 | [16-case-study-dana.md](16-case-study-dana.md) | Worked example: the Dana drivers in AAPS and Trio mapped onto this guideline |
+| 18 | [18-case-study-sibionics.md](18-case-study-sibionics.md) | Worked example: one vendor, two generations — why the regional builds are variants and the older generation is a second driver |
 | A | [17-terminology.md](17-terminology.md) | Appendix: terminology, including variants vs feature flags vs capabilities |
 
 ## Reference repositories

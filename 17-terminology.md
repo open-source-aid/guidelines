@@ -20,6 +20,7 @@ These are easy to mix up because each answers a different question at a differen
 
 - `pump-ypso` has the variants `ypso` (YpsoPump with its CryptoService) and `ypso-opn` (an older YpsoPump without it, driven in clear text).
 - A Dana driver would have `dana-rs`, `dana-rs-v3` and `dana-i`: one protocol, three security schemes ([16](16-case-study-dana.md#1-variants-map-onto-one-driver)).
+- A CGM example, including where the line is *not* a variant: [18](18-case-study-sibionics.md).
 
 **How feature flags relate to variants.** A feature flag can decide whether a variant is **compiled in at all**; the variant then decides how a **particular device** is driven. In `pump-ypso` the `ypso-opn` variant only exists when the crate is built with the `opn` feature, so an app that never wants to drive a clear-text pump leaves `opn` off and that code is not in the binary. Likewise the `delivery` feature decides whether insulin-delivering commands exist in a build at all, for every variant; it is not a property of any device.
 
