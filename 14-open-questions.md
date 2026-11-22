@@ -130,3 +130,10 @@ To decide: the name and fields, whether apps should alert on it like signal loss
 
 To decide: whether mg/dL users seeing a 1 mg/dL difference from the manufacturer's app is acceptable, or whether drivers should match each manufacturer's own conversion, and how other manufacturers convert.
 
+## Q20. May a crate expose more than one `static DRIVER`?
+
+[04](04-driver-contract.md) says "a driver crate exposes one `static DRIVER` value", and [03](03-repositories-and-crates.md) says "one driver crate per family". Some vendors ship several protocol generations that share a name, a GATT surface and much of the semantics but not the protocol — the Sibionics GS1 and GS3 are the worked case ([18](18-case-study-sibionics.md)). Following the rule literally means one crate per generation, with everything generic pulled up into shared crates when the second one lands, because R2 forbids one driver depending on another.
+
+**Proposal:** keep the rule. Two generations are two families, two crates, two `static DRIVER`s; the shared parts (a parameterised monitor, framing and cipher helpers) move to `cgm-shared` and the codec helpers when the second driver needs them, and device knowledge such as the GATT numbers is duplicated rather than shared. A crate that bundles several generations would blur "the protocol is the crate's identity" and would make a build that wants only one generation carry the other's protocol, its variants and its simulator.
+
+To decide: whether a "driver bundle" crate is ever worth a written exception — the `Driver` trait itself does not care, so the constraint is the rule and the host's driver registry, not the type — and if it is, how `DriverInfo` would describe the bundle and how a host would list and select its members.

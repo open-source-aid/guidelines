@@ -107,9 +107,8 @@ Two consequences that are about the shared contract, not about Sibionics:
   own status, measure signal loss from the last reading *with a value*, and let
   a driver heuristic flag readings but never end a sensor on its own.
 * **One `static DRIVER` per crate.** Two generations means two crates for one
-  vendor. If a later decision allows several `static DRIVER`s per crate, this
-  case is one of the reasons to revisit it — but the *protocol* boundary would
-  not move.
+  vendor. Whether a crate may ever expose several is [Q20](14-open-questions.md#q20-may-a-crate-expose-more-than-one-static-driver);
+  this case is the reason the question came up.
 
 ## 5. Lessons
 
