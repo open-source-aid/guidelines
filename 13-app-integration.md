@@ -31,9 +31,9 @@ Rules:
 
 The per-app mapping tables already exist in `pump-shared`:
 
-- [AndroidAPS](https://github.com/u-osaid/pump-shared/blob/main/.docs/integration/aaps.md)
-- [Loop](https://github.com/u-osaid/pump-shared/blob/main/.docs/integration/loop.md)
-- [Trio](https://github.com/u-osaid/pump-shared/blob/main/.docs/integration/trio.md) (on top of Loop)
+- [AndroidAPS](https://github.com/open-source-aid/pump-shared/blob/main/.docs/integration/aaps.md)
+- [Loop](https://github.com/open-source-aid/pump-shared/blob/main/.docs/integration/loop.md)
+- [Trio](https://github.com/open-source-aid/pump-shared/blob/main/.docs/integration/trio.md) (on top of Loop)
 
 Key adapter duties, all app-specific and therefore not in the driver:
 

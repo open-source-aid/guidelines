@@ -1,6 +1,6 @@
 # OS-AID Unified Driver Guideline
 
-**Status:** Draft for group review · **Applies to:** pump, CGM, uploader and simulator crates under `u-osaid` · **Contract version:** `pump_shared::API_VERSION = 1`
+**Status:** Draft for group review · **Applies to:** pump, CGM, uploader and simulator crates under `open-source-aid` · **Contract version:** `pump_shared::API_VERSION = 1`
 
 ## Why this exists
 
@@ -10,7 +10,7 @@ Every open-source AID app (AndroidAPS, Trio, Loop, …) carries its own copy of 
 - **Apps keep thin wrappers.** The existing drivers in Trio and AAPS become adapters around the Rust driver. The adapters do only what is platform-specific (the BLE stack, the keychain, the clock, the UI) or app-specific (mapping to `PumpManager`, `PumpSync`, …).
 - **Every driver can be simulated and tested** in process, in CI, and over real BLE against a hardware simulator.
 
-**Read it as one page:** https://u-osaid.github.io/guidelines/ (built from this repository on every push to `main`).
+**Read it as one page:** https://open-source-aid.github.io/guidelines/ (built from this repository on every push to `main`).
 
 ## How to read this
 
@@ -40,10 +40,10 @@ The words **MUST**, **MUST NOT**, **SHOULD**, **SHOULD NOT** and **MAY** follow 
 
 | Repository | Role |
 |---|---|
-| [`pump-shared`](https://github.com/u-osaid/pump-shared) | The shared contract: types, `Driver` / `Engine` traits, therapy state machine, data model ([`.docs`](https://github.com/u-osaid/pump-shared/tree/main/.docs)) |
-| [`pump-ypso`](https://github.com/u-osaid/pump-yspo) | Reference driver: YpsoPump protocol, engine and simulator |
-| [`simulator`](https://github.com/u-osaid/simulator) | Device-agnostic BLE peripheral bridge and nRF52840 firmware that hosts any device simulator |
-| [`tester`](https://github.com/u-osaid/tester) | In-process harness, real-BLE central, and the `tester` scenario runner |
+| [`pump-shared`](https://github.com/open-source-aid/pump-shared) | The shared contract: types, `Driver` / `Engine` traits, therapy state machine, data model ([`.docs`](https://github.com/open-source-aid/pump-shared/tree/main/.docs)) |
+| [`pump-ypso`](https://github.com/open-source-aid/pump-yspo) | Reference driver: YpsoPump protocol, engine and simulator |
+| [`simulator`](https://github.com/open-source-aid/simulator) | Device-agnostic BLE peripheral bridge and nRF52840 firmware that hosts any device simulator |
+| [`tester`](https://github.com/open-source-aid/tester) | In-process harness, real-BLE central, and the `tester` scenario runner |
 
 ## Terminology
 
@@ -57,4 +57,4 @@ Edit the Markdown and open a pull request. The `pages` workflow builds the page 
 cd site && npm ci && npm run build   # writes _site/index.html
 ```
 
-Agents working on any u-osaid crate should follow [CLAUDE.md](https://github.com/u-osaid/guidelines/blob/main/CLAUDE.md), which summarises the rules in this guideline.
+Agents working on any open-source-aid crate should follow [CLAUDE.md](https://github.com/open-source-aid/guidelines/blob/main/CLAUDE.md), which summarises the rules in this guideline.

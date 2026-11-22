@@ -110,4 +110,4 @@ Proposed additions:
 - A minimum-supported-Rust-version job (`rust-version = "1.85"` today).
 - `cargo audit` / `cargo deny`.
 - A cross-repository job in `tester` that runs every driver's scenarios against the latest `pump-shared`, so a contract change cannot silently break a driver.
-- A shared reusable workflow (`u-osaid/.github`) so every driver repository runs the same checks.
+- A shared reusable workflow (`open-source-aid/.github`) so every driver repository runs the same checks.

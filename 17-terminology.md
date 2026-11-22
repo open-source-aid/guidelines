@@ -1,6 +1,6 @@
 # Appendix: Terminology
 
-Technical terms used in this guideline and in the `u-osaid` repositories. Diabetes and dosing terms (IOB, COB, ISF, …) are left out. Type names in `code` are from `pump-shared` unless another crate is named.
+Technical terms used in this guideline and in the `open-source-aid` repositories. Diabetes and dosing terms (IOB, COB, ISF, …) are left out. Type names in `code` are from `pump-shared` unless another crate is named.
 
 ## Variants, feature flags and related terms
 

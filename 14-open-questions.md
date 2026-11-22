@@ -42,7 +42,7 @@ Uploaders (Nightscout, Tidepool, …) are not BLE devices. Should they use the s
 
 ## Q7. Bindings technology and ownership
 
-**Proposal** ([13](13-app-integration.md#bindings-proposal)): UniFFI, one `bindings` repository, maintained by the u-osaid group. Open: who maintains the Kotlin and Swift host runtimes, and do they live in u-osaid or in each app?
+**Proposal** ([13](13-app-integration.md#bindings-proposal)): UniFFI, one `bindings` repository, maintained by the open-source-aid group. Open: who maintains the Kotlin and Swift host runtimes, and do they live in open-source-aid or in each app?
 
 ## Q8. Licence compatibility
 

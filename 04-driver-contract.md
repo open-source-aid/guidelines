@@ -1,6 +1,6 @@
 # 4. The driver contract
 
-All types below are in `pump-shared` (**Current**, `API_VERSION = 1`). This chapter explains the rules around them; the field-level reference is [`pump-shared/.docs/data-model.md`](https://github.com/u-osaid/pump-shared/blob/main/.docs/data-model.md).
+All types below are in `pump-shared` (**Current**, `API_VERSION = 1`). This chapter explains the rules around them; the field-level reference is [`pump-shared/.docs/data-model.md`](https://github.com/open-source-aid/pump-shared/blob/main/.docs/data-model.md).
 
 ## `Driver`: the static description
 

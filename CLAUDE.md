@@ -1,6 +1,6 @@
 # OS-AID driver guideline: instructions for agents
 
-This folder holds the OS-AID Unified Driver Guideline. Follow it whenever you write, change or review a u-osaid crate: pump, CGM or uploader drivers, shared crates, simulators, `tester` and bindings.
+This folder holds the OS-AID Unified Driver Guideline. Follow it whenever you write, change or review a open-source-aid crate: pump, CGM or uploader drivers, shared crates, simulators, `tester` and bindings.
 
 These drivers deliver insulin, so a safety rule is never a style preference. If a task would break a rule here, stop and say so. Do not work around the rule.
 
@@ -11,7 +11,7 @@ These drivers deliver insulin, so a safety rule is never a style preference. If 
 - In the chapters, **Current** marks what the repositories already do, and **Proposal** marks text the group has not agreed on. Implement Current behaviour. Don't implement a Proposal unless the task asks for it, and if it does, say so in the PR.
 - The decisions still open are listed in [14-open-questions.md](14-open-questions.md) as Q1–Q17. Don't settle one yourself. If your work depends on one, pick the least committal option, mark it in the code with `// Open: Qn`, and mention it in your summary.
 - [17-terminology.md](17-terminology.md) defines the terms. Use them exactly. In particular, a *variant* is chosen per device at run time, a *feature flag* is chosen per build at compile time, and *capabilities*, *limits* and *configuration* are three different things.
-- The reference code lives in the sibling repositories of the `u-osaid` GitHub organisation: `pump-shared`, `pump-yspo` (crate `pump-ypso`; the repository name is a typo, ignore it), `simulator` and `tester`. They are usually checked out next to this repository (`../pump-shared` and so on); if they are not, clone them from `github.com/u-osaid`. When the guideline says "follow the reference driver", read `pump-ypso`.
+- The reference code lives in the sibling repositories of the `open-source-aid` GitHub organisation: `pump-shared`, `pump-yspo` (crate `pump-ypso`; the repository name is a typo, ignore it), `simulator` and `tester`. They are usually checked out next to this repository (`../pump-shared` and so on); if they are not, clone them from `github.com/open-source-aid`. When the guideline says "follow the reference driver", read `pump-ypso`.
 
 | Task | Read first |
 |---|---|

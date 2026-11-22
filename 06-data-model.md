@@ -1,6 +1,6 @@
 # 6. Data model, configuration and capabilities
 
-The authoritative reference is [`pump-shared/.docs/data-model.md`](https://github.com/u-osaid/pump-shared/blob/main/.docs/data-model.md). This chapter gives the rules a driver author needs and defines the vocabulary the group agreed on.
+The authoritative reference is [`pump-shared/.docs/data-model.md`](https://github.com/open-source-aid/pump-shared/blob/main/.docs/data-model.md). This chapter gives the rules a driver author needs and defines the vocabulary the group agreed on.
 
 ## Units
 

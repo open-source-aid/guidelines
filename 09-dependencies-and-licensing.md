@@ -23,7 +23,7 @@ A runtime dependency of a driver or shared crate MUST:
 
 Recommended CI additions (Proposal): `cargo audit` and `cargo deny` (licences, advisories, duplicate versions).
 
-## Dependencies between u-osaid crates
+## Dependencies between open-source-aid crates
 
 | From | May depend on |
 |---|---|
