@@ -33,6 +33,16 @@ These drivers move insulin. The rules here are not style preferences; a driver t
 | S15 | Arithmetic on doses, rates and durations is checked or saturating, and the choice is deliberate |
 | S16 | Device behaviour that is assumed rather than confirmed is listed in `.docs/to-confirm.md` with the bench test that settles it (as `pump-ypso` does) |
 
+## Glucose data (Proposal)
+
+CGM readings feed dosing decisions, so a wrong value is as dangerous as a wrong dose. Details in [06](06-data-model.md#cgm-data-model-proposal).
+
+| # | Rule |
+|---|---|
+| S19 | A driver reads and reports every sensor-reported failure, expiry or temporary issue the protocol carries. Readings taken during any of them are flagged unusable |
+| S20 | Signal loss is measured from the last reading with a value, never from the last record, so a sensor streaming without values does not look active |
+| S21 | A driver's own heuristics may flag readings but never end a sensor. A state that ends a sensor is entered only after it is confirmed over several consecutive new records |
+
 ## Testing hardware
 
 | # | Rule |

@@ -50,3 +50,18 @@ Use this for a new driver and as the review checklist for a driver pull request.
 
 - [ ] `CHANGELOG.md` separates device-visible changes from API changes
 - [ ] Tagged release; dependents pin the tag
+
+## CGM drivers (Proposal, [06](06-data-model.md#cgm-data-model-proposal))
+
+- [ ] `CgmDriverInfo.commands` lists exactly which of `Calibrate`, `StartSensor` and `StopSensor` are supported; the README says so, including "not supported"
+- [ ] Irreversible commands (start, stop) are listed, with what makes the driver send them
+- [ ] Every value matches the manufacturer's app in the sensor's own unit; any difference in the other unit is explained
+- [ ] The arrow is the sensor's own trend code where the protocol has one
+- [ ] Backfill starts from the last reading seen before the gap, not from a record the sensor resends on connect
+- [ ] Records the sensor resends, and history another app requests, are not forwarded twice
+- [ ] The sensor's own health status is read and reported (S19); a final state is confirmed over several records (S21)
+- [ ] Signal loss is measured from the last value (S20)
+- [ ] Per-reading status bits are documented with what the manufacturer's app does with each
+- [ ] The README lists every deliberate deviation from the manufacturer's app under "Known limitations and deviations"
+- [ ] A hardware test plan covers first launch over the previous driver, accuracy against the manufacturer's export, backfill after a quit and a dropout, credentials and re-pairing, and a sensor's end of life
+

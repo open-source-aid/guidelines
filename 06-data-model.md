@@ -61,13 +61,41 @@ Rules:
 
 ## CGM data model (Proposal)
 
-Not yet defined. Minimum content for `cgm-shared`, to be agreed before the first CGM driver:
+`cgm-shared` holds the CGM contract (`CGM_API_VERSION = 2`); `cgm-sibionics` is the first driver on it. The types, and the rules below, come from building that driver against a real sensor. Expect them to change as more CGM drivers arrive.
 
 | Type | Content |
 |---|---|
-| `GlucoseReading` | `time: UtcTime`, `value: Option<MgDl>` (`u16` mg/dL, see [Glucose](06-data-model.md#glucose)), `trend: Option<Trend>`, `quality` flags, `sequence`, `raw` |
-| `SensorState` | `WarmingUp { until }`, `Active { expires }`, `Expired`, `Failed(code)`, `Unknown` |
+| `GlucoseReading` | `time: UtcTime`, `value: Option<MgDl>` (`u16` mg/dL, see [Glucose](06-data-model.md#glucose)), `trend: Option<Trend>`, `rate`, `quality` flags (`WARMUP`, `EXPIRED`, `IMPLAUSIBLE`, `DEVICE_FLAGGED`, `SENSOR_FAILED`), `sequence`, `historical`, `raw` |
+| `SensorState` | `WarmingUp { until }`, `Active { expires }`, `Expired`, `Failed(code)`, `SignalLost { since }`, `Unknown`. There is no state for a temporary sensor issue yet ([Q18](14-open-questions.md#q18-a-recoverable-sensor-state-in-cgm-shared)) |
 | `Calibration` | Value, time, accepted or not |
-| Commands | `Status`, `ReadReadings { after }`, `Calibrate`, `StartSensor`, `StopSensor`, `Pair`, `Unpair` |
+| Commands | `Status`, `Pair`, `Unpair`, `ReadReadings { after }`, `StartSensor`, `StopSensor`, `Calibrate`, `Stop` |
 
-Backfill (readings missed while disconnected) uses the same `after: Sequence` pattern as pump history.
+Backfill (readings missed while disconnected) uses the same `after: Sequence` pattern as pump history. A reading the driver reports is never silently dropped: it carries `quality` flags, and the adapter decides from them what to forward.
+
+### Capabilities
+
+A driver lists in `CgmDriverInfo.commands` exactly which of `Calibrate`, `StartSensor` and `StopSensor` it supports, and its README says so in words, including "not supported". An app never has to guess whether a CGM can be calibrated or stopped. If the protocol has no calibration, the driver does not fake one on the phone. Start and stop are usually irreversible; the README lists which commands are, and what makes the driver send them. (Current: `cgm-sibionics` supports none of the three as commands; it starts a factory-new sensor inside `Pair` and never sends the known stop command.)
+
+### Sensor health
+
+- **The sensor's own status comes first.** Wherever the protocol carries the sensor's health (a status reply, a field in every record, an advertisement), the driver reads it and reports it: a failure as `Failed(code)` with the code documented, an expiry as `Expired`. Every state the manufacturer's app warns about is reported.
+- **Readings during a bad status are flagged.** Each reading carries the flag for its own record's status (`SENSOR_FAILED`, `EXPIRED`, `DEVICE_FLAGGED`), history included. Only live records change the sensor's current state.
+- **A final state needs confirmation.** A state that ends a sensor (an app typically persists `Failed` until the sensor is replaced) is entered only after several consecutive new records report it, so one odd record cannot end a working sensor. Resends do not count. Recoverable states act per record. (Current: `cgm-sibionics` waits for three records.)
+- **Driver heuristics never end a sensor.** A plausibility check the manufacturer's app does not make may flag readings (`IMPLAUSIBLE`) but does not declare the sensor failed.
+- **Per-reading status bits are documented** with what the manufacturer's app does with each, including "ignored".
+
+### Trend
+
+Where the protocol carries the sensor's own trend code, the arrow is that code, so it matches the manufacturer's app; the driver may still derive the rate of change. Only a sensor without a trend code gets a derived arrow. (Current: `cgm-sibionics`; the arrow derived from five-minute deltas disagreed with the official app on about one reading in five.)
+
+### Signal loss
+
+`SignalLost` is the age of the last reading that carried a *value*, not of the last record or notification. Some sensors keep sending records with no result in them when they cannot compute one, and a sensor like that must not look active. Records that never carry a value on a healthy sensor (placeholders between readings, warm-up) are allowed for, so the rule is "time since the last value", never "this record has no value". A separate link watchdog may still drop a link that delivers nothing at all. There is no rate-of-change gate: real glucose moves fast.
+
+### Deviations from the manufacturer's app
+
+A driver may deliberately behave differently from the manufacturer's app, for example by acting on a status the app only reads at connect. Each such difference is listed in the driver's README under "Known limitations and deviations", with the reason and what it costs. A deviation that can only hold readings back, never forward a wrong one, is the preferred kind.
+
+### Conversion and the manufacturer's display
+
+Drivers convert with 18.0182 and round once ([Glucose](06-data-model.md#glucose)). A manufacturer's app may not: the Sibionics app computes mmol/L × 18.016 and rounds down, so a driver following this rule reads up to 1 mg/dL above it. Rounding is kept because it stays within 0.5 mg/dL of the sensor's own value and converts back to the exact mmol/L; truncating would show some mmol/L values 0.1 low after an app converts back. Whether drivers should match the manufacturer's mg/dL instead is [Q19](14-open-questions.md#q19-mgdl-against-the-manufacturers-app).

@@ -7,9 +7,9 @@ These drivers deliver insulin, so a safety rule is never a style preference. If 
 ## How to use this folder
 
 - This file is a summary. The numbered chapters are authoritative, and where they disagree with this file, the chapter wins. Read the relevant chapter before you start; don't work from memory.
-- Rule IDs (R1–R11, E1–E10, S1–S18) are stable. Cite them in code comments, commit messages and review findings, for example `// S4: outcome is Unknown, never retried`.
+- Rule IDs (R1–R11, E1–E10, S1–S21) are stable. Cite them in code comments, commit messages and review findings, for example `// S4: outcome is Unknown, never retried`.
 - In the chapters, **Current** marks what the repositories already do, and **Proposal** marks text the group has not agreed on. Implement Current behaviour. Don't implement a Proposal unless the task asks for it, and if it does, say so in the PR.
-- The decisions still open are listed in [14-open-questions.md](14-open-questions.md) as Q1–Q17. Don't settle one yourself. If your work depends on one, pick the least committal option, mark it in the code with `// Open: Qn`, and mention it in your summary.
+- The decisions still open are listed in [14-open-questions.md](14-open-questions.md) as Q1–Q19. Don't settle one yourself. If your work depends on one, pick the least committal option, mark it in the code with `// Open: Qn`, and mention it in your summary.
 - [17-terminology.md](17-terminology.md) defines the terms. Use them exactly. In particular, a *variant* is chosen per device at run time, a *feature flag* is chosen per build at compile time, and *capabilities*, *limits* and *configuration* are three different things.
 - The reference code lives in the sibling repositories of the `open-source-aid` GitHub organisation: `pump-shared`, `pump-yspo` (crate `pump-ypso`; the repository name is a typo, ignore it), `simulator` and `tester`. They are usually checked out next to this repository (`../pump-shared` and so on); if they are not, clone them from `github.com/open-source-aid`. When the guideline says "follow the reference driver", read `pump-ypso`.
 
@@ -78,6 +78,7 @@ These drivers deliver insulin, so a safety rule is never a style preference. If 
 - **S11, S12:** Use established crypto crates and never hand-roll a cipher. Every crypto and framing path has known-answer vectors, from real captures where possible.
 - **S13, S14, S15:** Use `#![forbid(unsafe_code)]`. Don't use `panic!`, `unwrap`, `expect` or unchecked indexing on radio data. Arithmetic on doses, rates and durations is deliberately checked or saturating.
 - **S16:** Unconfirmed device behaviour goes in `.docs/to-confirm.md`, together with the bench test that would settle it.
+- **S19, S20, S21 (Proposal, CGM):** Read and report the sensor's own failure, expiry and temporary-issue status, and flag readings taken during them. Measure signal loss from the last reading with a value. Driver heuristics may flag readings but never end a sensor, and a state that ends a sensor is confirmed over several consecutive records.
 - **S17, S18:** Tools only connect to known simulators, never to whatever is in range. Never run delivery commands against a pump attached to a person, and never point any tool you run at a real pump.
 
 ### Repository layout ([03](03-repositories-and-crates.md))

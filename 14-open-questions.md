@@ -113,3 +113,20 @@ S10 in [08](08-safety.md#cryptography-and-counters) says keys and session materi
 **Proposal** ([11](11-simulators.md#control-tooling-usb-console-tui-and-mcp-proposal)): turn `tester` into a long-lived service controlled over USB, with an MCP server over stdio first (for agents) and a TUI second. A web UI stays optional because of the extra front end, tooling and HTTP security it brings.
 
 To decide: the exact MCP tool set; the JSON format of the board's `status` reply (shared across pump and CGM simulators); whether the MCP server may run against `--target ble` without a person present; and whether a web UI is wanted at all.
+
+## Q18. A recoverable sensor state in cgm-shared
+
+Some sensors report a temporary issue: readings pause and the sensor recovers by itself (the Sibionics app says to wait up to three hours and not to remove it). `SensorState` has only `Failed(code)`, which apps treat as final, so a driver today can only flag the readings (`DEVICE_FLAGGED`) and the app shows nothing more specific than signal loss.
+
+**Proposal:** add `SensorState::Paused { since, code }` (name open): no readings are usable while it lasts, the app tells the user to wait rather than replace the sensor, and it ends by itself. That is an incompatible contract change, so `CGM_API_VERSION` goes to 3.
+
+To decide: the name and fields, whether apps should alert on it like signal loss, and whether "the official app cannot use the sensor" (Sibionics status 7) belongs here or in `Failed`.
+
+## Q19. mg/dL against the manufacturer's app
+
+[06](06-data-model.md#conversion-and-the-manufacturers-display) says to convert with 18.0182 and round once. The Sibionics app computes mmol/L × 18.016 and rounds down (it reproduces all 1,997 readings of a 7-day mg/dL export), so a driver that follows the rule reads 1 mg/dL higher on about 58 % of readings, never more.
+
+**Proposal:** keep the rule. It is the closer value to the sensor's own mmol/L, and it converts back to exactly that value; rounding down would show 26 of 324 mmol/L values 0.1 low after an app's mg/dL → mmol/L conversion. List the difference as a known deviation in the driver's README.
+
+To decide: whether mg/dL users seeing a 1 mg/dL difference from the manufacturer's app is acceptable, or whether drivers should match each manufacturer's own conversion, and how other manufacturers convert.
+
